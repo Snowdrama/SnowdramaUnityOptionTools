@@ -1,8 +1,8 @@
 {
-  "name": "com.snowdrama.timers",
+  "name": "com.snowdrama.class_extensions",
   "version": "0.1.0",
-  "description": "A package of timer and itterator tools",
-  "displayName": "Snowdrama Timer Tools",
+  "description": "A package of extensions for various things",
+  "displayName": "Snowdrama Unity Class Extensions",
   "unity": "2019.1",
   "author": {
     "name": "John 'Snowdrama' Close",
@@ -13,9 +13,9 @@
   "type": "utility",
   "samples": [
     {
-      "displayName": "Timer Example",
-      "description": "Contains an example of how to use the timers for various things",
-      "path": "Samples~/TimerExample"
+      "displayName": "Extensions Example",
+      "description": "Contains examples of things that the various extensions can do",
+      "path": "Samples~/ExtensionsExample"
     }
   ]
 }
