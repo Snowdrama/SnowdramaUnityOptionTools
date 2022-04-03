@@ -1,4 +1,4 @@
-# SnowdramaUnitySpringTools
+# Snowdrama Unity Class Extensions
 A package of the timer tools I use in unity
 
 ![Unity_OgDR7P6MIR](https://user-images.githubusercontent.com/1271916/159188098-6be895d1-b1e3-419a-9450-f51beae50faa.gif)
