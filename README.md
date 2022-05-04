@@ -1,7 +1,12 @@
 # Snowdrama Unity Class Extensions
-A package of the timer tools I use in unity
+A package of extension methods I use for various things
 
-![Unity_OgDR7P6MIR](https://user-images.githubusercontent.com/1271916/159188098-6be895d1-b1e3-419a-9450-f51beae50faa.gif)
+Some examples include:
+* Float.Remap - to remap a value from one range to another
+* Vector2.AngleFromVector - get an angle in degrees from a vector
+* Vector2.AngleFromVectorRads - for the radians fans out there
+* Vector2.VectorFromAngle - get a direction vector from an angle
+* LayerMask.LayerContains - for seeing if a layer mask contains certain layers
 
 # Requirements & Disclaimer
 In theory it works with earlier versions but I have tested against 2020.3.19f1(current LTS version) but I have it set to work with 2019.1
