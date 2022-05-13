@@ -19,16 +19,17 @@ namespace Snowdrama.ClassExtensions{
             return VectorFromAngleRads(angle).normalized;
         }
 
-        public static float AngleFromVector(Vector2 dir)
+        public static float AngleFromVector(this Vector2 dir)
         {
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(dir.y , dir.x);
-            if(angle < 0)
+            float angle = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
+            if (angle < 0)
             {
                 angle += 360;
             }
             return angle;
         }
-        public static float AngleFromVectorRads(Vector2 dir)
+
+        public static float AngleFromVectorRads(this Vector2 dir)
         {
             var angle = Mathf.Atan2(dir.y , dir.x);
             if (angle < 0)
