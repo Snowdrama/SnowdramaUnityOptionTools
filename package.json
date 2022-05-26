@@ -1,7 +1,7 @@
 {
   "name": "com.snowdrama.class_extensions",
-  "version": "0.1.0",
-  "description": "A package of extensions for various things",
+  "version": "0.1.1",
+  "description": "A package of extensions for various things for:\n\nCamera\nColor\nEnum\nFloat\nGame\nIUnt\nLayer\nVector2",
   "displayName": "Snowdrama Unity Class Extensions",
   "unity": "2019.1",
   "author": {
@@ -9,7 +9,6 @@
     "email": "SnowdramaGames@gmail.com",
     "url": "http://www.snowdrama.net"
   },
-  "dependencies": {},
   "type": "utility",
   "samples": [
     {
