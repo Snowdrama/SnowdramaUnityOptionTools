@@ -33,4 +33,14 @@ public static class Vector3Extensions
     {
         return new Vector3(Mathf.Round(dir.x), Mathf.Round(dir.y), Mathf.Round(dir.z));
     }
+
+    public static Vector3Int Clamp(this Vector3Int val, Vector3Int min, Vector3Int max)
+    {
+        return new Vector3Int(Mathf.Clamp(val.x, min.x, max.x), Mathf.Clamp(val.y, min.y, max.y), Mathf.Clamp(val.z, min.z, max.z));
+    }
+    public static Vector3 Clamp(this Vector3 val, Vector3 min, Vector3 max)
+    {
+        return new Vector3(Mathf.Clamp(val.x, min.x, max.x), Mathf.Clamp(val.y, min.y, max.y), Mathf.Clamp(val.z, min.z, max.z));
+    }
+
 }

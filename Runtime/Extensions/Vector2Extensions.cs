@@ -48,6 +48,15 @@ public static class Vector2Extensions{
         return new Vector2(Mathf.Round(dir.x), Mathf.Round(dir.y));
     }
 
+    public static Vector2Int Clamp(this Vector2Int val, Vector2Int min, Vector2Int max)
+    {
+        return new Vector2Int(Mathf.Clamp(val.x, min.x, max.x), Mathf.Clamp(val.y, min.y, max.y));
+    }
+    public static Vector2 Clamp(this Vector2 val, Vector2 min, Vector2 max)
+    {
+        return new Vector2(Mathf.Clamp(val.x, min.x, max.x), Mathf.Clamp(val.y, min.y, max.y));
+    }
+
     public static float AngleFromVector(this Vector2 dir)
     {
         float angle = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
