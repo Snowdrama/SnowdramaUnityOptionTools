@@ -63,4 +63,33 @@ public static class FloatExtensions
         return value;
     }
 
+    public static int FloorToInt(this float val)
+    {
+        return Mathf.FloorToInt(val);
+    }
+
+    public static int CeilToInt(this float val)
+    {
+        return Mathf.CeilToInt(val);
+    }
+
+    public static int RoundToInt(this float val)
+    {
+        return Mathf.RoundToInt(val);
+    }
+
+    public static float Floor(this float val)
+    {
+        return Mathf.Floor(val);
+    }
+
+    public static float Ceil(this float val)
+    {
+        return Mathf.Ceil(val);
+    }
+
+    public static float Round(this float val)
+    {
+        return Mathf.Round(val);
+    }
 }

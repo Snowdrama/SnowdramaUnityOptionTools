@@ -18,6 +18,36 @@ public static class Vector2Extensions{
         return VectorFromAngleRads(angle).normalized;
     }
 
+    public static Vector2Int FloorToInt(this Vector2 dir)
+    {
+        return new Vector2Int(Mathf.FloorToInt(dir.x), Mathf.FloorToInt(dir.y));
+    }
+
+    public static Vector2Int CeilToInt(this Vector2 dir)
+    {
+        return new Vector2Int(Mathf.CeilToInt(dir.x), Mathf.CeilToInt(dir.y));
+    }
+
+    public static Vector2Int RoundToInt(this Vector2 dir)
+    {
+        return new Vector2Int(Mathf.RoundToInt(dir.x), Mathf.RoundToInt(dir.y));
+    }
+
+    public static Vector2 Floor(this Vector2 dir)
+    {
+        return new Vector2(Mathf.Floor(dir.x), Mathf.Floor(dir.y));
+    }
+
+    public static Vector2 Ceil(this Vector2 dir)
+    {
+        return new Vector2(Mathf.Ceil(dir.x), Mathf.Ceil(dir.y));
+    }
+
+    public static Vector2 Round(this Vector2 dir)
+    {
+        return new Vector2(Mathf.Round(dir.x), Mathf.Round(dir.y));
+    }
+
     public static float AngleFromVector(this Vector2 dir)
     {
         float angle = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
