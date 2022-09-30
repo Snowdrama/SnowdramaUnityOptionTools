@@ -27,40 +27,9 @@ public static class FloatExtensions
     /// <param name="maxValue"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static float WrapClamp(float minValue, float maxValue, float value)
+    public static float WrapClamp(float x, float min, float max)
     {
-        //prevent issues where the min and max are the same
-        if (minValue == maxValue)
-        {
-            return minValue;
-        }
-
-        //swap the values if they're entered wrong.
-        if(minValue > maxValue)
-        {
-            Debug.LogErrorFormat("Wrap Clamp's minValue {0} is greater than it's maxValue {1}, we've swapped the values.", minValue, maxValue);
-            var temp = minValue;
-            minValue = maxValue;
-            maxValue = temp;
-        }
-
-        if (value < minValue)
-        {
-            value = maxValue - Mathf.Abs(minValue - value);
-        }
-
-        if (value >= maxValue)
-        {
-            value = minValue + (value - maxValue);
-        }
-
-        //recurse if we're still outside the range.
-        if (value >= maxValue || value < minValue)
-        {
-            value = WrapClamp(minValue, maxValue, value);
-        }
-
-        return value;
+        return (((x - min) % (max - min)) + (max - min)) % (max - min) + min;
     }
 
     public static int FloorToInt(this float val)
