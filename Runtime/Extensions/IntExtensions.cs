@@ -16,4 +16,9 @@ public static class IntExtensions
     {
         return (((x - min) % (max - min)) + (max - min)) % (max - min) + min;
     }
+
+    public static int Clamp(this int f, int min, int max)
+    {
+        return Mathf.Clamp(f, min, max);
+    }
 }
