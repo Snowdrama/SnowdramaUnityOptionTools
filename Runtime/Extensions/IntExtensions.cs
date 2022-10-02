@@ -12,7 +12,7 @@ public static class IntExtensions
     /// <param name="minValue"></param>
     /// <param name="maxValue"></param>
     /// <returns></returns>
-    public static int WrapClamp(int x, int min, int max)
+    public static int WrapClamp(this int x, int min, int max)
     {
         return (((x - min) % (max - min)) + (max - min)) % (max - min) + min;
     }

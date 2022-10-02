@@ -27,7 +27,7 @@ public static class FloatExtensions
     /// <param name="maxValue"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static float WrapClamp(float x, float min, float max)
+    public static float WrapClamp(this float x, float min, float max)
     {
         return (((x - min) % (max - min)) + (max - min)) % (max - min) + min;
     }
