@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class ColorExtensions
 {
-    public static Color ParseHexString(string hexString, Color fallback = default)
+    public static Color ParseHexString(this string hexString, Color fallback = default)
     {
         Color color = fallback;
         ColorUtility.TryParseHtmlString(hexString, out color);
