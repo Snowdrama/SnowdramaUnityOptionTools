@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ColorExtensions
+public static class Color
 {
-    public static Color ParseHexString(this string hexString, Color fallback = default)
+    public static UnityEngine.Color ParseHexString(string hexString, UnityEngine.Color fallback = default)
     {
-        Color color = fallback;
+        UnityEngine.Color color = fallback;
         ColorUtility.TryParseHtmlString(hexString, out color);
         return color;
     }
 
-    public static Color GetColorFromRainbow(float t, float of = 1, Gradient gradient = null)
+    public static UnityEngine.Color GetColorFromRainbow(float t, float of = 1, UnityEngine.Gradient gradient = null)
     {
-        Gradient g;
+        UnityEngine.Gradient g;
         if (gradient == null)
         {
             g = gradient;
         }
         else
         {
-            g = new Gradient();
+            g = new UnityEngine.Gradient();
             GradientColorKey[] colorKeys = new GradientColorKey[8];
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
             alphaKeys[0].alpha = 1;
@@ -29,14 +29,14 @@ public static class ColorExtensions
             alphaKeys[0].time = 0;
             alphaKeys[0].time = 1;
 
-            colorKeys[0].color = Color.red;
-            colorKeys[1].color = Color.yellow;
-            colorKeys[2].color = Color.green;
-            colorKeys[3].color = Color.cyan;
-            colorKeys[4].color = Color.blue;
-            colorKeys[5].color = Color.magenta;
-            colorKeys[6].color = Color.white;
-            colorKeys[7].color = Color.black;
+            colorKeys[0].color = UnityEngine.Color.red;
+            colorKeys[1].color = UnityEngine.Color.yellow;
+            colorKeys[2].color = UnityEngine.Color.green;
+            colorKeys[3].color = UnityEngine.Color.cyan;
+            colorKeys[4].color = UnityEngine.Color.blue;
+            colorKeys[5].color = UnityEngine.Color.magenta;
+            colorKeys[6].color = UnityEngine.Color.white;
+            colorKeys[7].color = UnityEngine.Color.black;
 
             colorKeys[0].time = 0.0f;
             colorKeys[1].time = 0.14f * 1;
