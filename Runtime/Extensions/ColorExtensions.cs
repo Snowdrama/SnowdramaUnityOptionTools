@@ -5,6 +5,13 @@ using UnityEngine;
 
 public static class ColorExtensions
 {
+    public static Color ParseHexString(string hexString, Color fallback = default)
+    {
+        Color color = fallback;
+        ColorUtility.TryParseHtmlString(hexString, out color);
+        return color;
+    }
+
     public static Color GetColorFromRainbow(float t, float of = 1, Gradient gradient = null)
     {
         Gradient g;
