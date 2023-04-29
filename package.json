@@ -11,10 +11,5 @@
   },
   "type": "utility",
   "samples": [
-    {
-      "displayName": "Extensions Example",
-      "description": "Contains examples of things that the various extensions can do",
-      "path": "Samples~/ExtensionsExample"
-    }
   ]
 }
