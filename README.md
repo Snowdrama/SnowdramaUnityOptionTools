@@ -1,12 +1,7 @@
-# Snowdrama Unity Class Extensions
-A package of extension methods I use for various things
+# Snowdrama Unity Options Tools
+A package of tools for managing options.
 
-Some examples include:
-* Float.Remap - to remap a value from one range to another
-* Vector2.AngleFromVector - get an angle in degrees from a vector
-* Vector2.AngleFromVectorRads - for the radians fans out there
-* Vector2.VectorFromAngle - get a direction vector from an angle
-* LayerMask.LayerContains - for seeing if a layer mask contains certain layers
+The goal is to be able for something to hold a reference to the options and be able to update them or read values easily.
 
 # Requirements & Disclaimer
 In theory it works with earlier versions but I have tested against 2020.3.19f1(current LTS version) but I have it set to work with 2019.1
