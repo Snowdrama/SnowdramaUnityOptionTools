@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "OptionsObject", menuName = "OptionsObject")]
@@ -9,99 +11,131 @@ public class OptionsObject : ScriptableObject
     public List<FloatOption> defaultFloats = new List<FloatOption>();
     public List<IntOption> defaultInts = new List<IntOption>();
     public List<BoolOption> defaultBools = new List<BoolOption>();
-
-    public Dictionary<string, int> intValues;
-    public Dictionary<string, float> floatValues;
-    public Dictionary<string, bool> boolValues;
+    public List<StringOption> defaultStrings = new List<StringOption>();
 
     [Header("Debug [Edits Do Nothing]")]
     public List<FloatOption> debugFloats = new List<FloatOption>();
     public List<IntOption> debugInts = new List<IntOption>();
     public List<BoolOption> debugBools = new List<BoolOption>();
+    public List<StringOption> debugStrings = new List<StringOption>();
+
+    [System.Serializable]
+    struct OptionData
+    {
+        public Dictionary<string, int> intValues;
+        public Dictionary<string, float> floatValues;
+        public Dictionary<string, bool> boolValues;
+        public Dictionary<string, string> stringValues;
+    }
+
+    [System.NonSerialized]
+    OptionData data = new OptionData();
 
     public void Save()
     {
-        Debug.Log("Saving Player Prefs");
-
-        foreach (var item in intValues)
-        {
-            PlayerPrefs.SetInt(item.Key, item.Value);
-        }
-        foreach (var item in floatValues)
-        {
-            PlayerPrefs.SetFloat(item.Key, item.Value);
-        }
-        foreach (var item in boolValues)
-        {
-            PlayerPrefs.SetInt(item.Key, (item.Value) ? 1 : 0);
-        }
+        if (data.intValues == null) { data.intValues = new Dictionary<string, int>(); }
+        if (data.floatValues == null) { data.floatValues = new Dictionary<string, float>(); }
+        if (data.boolValues == null) { data.boolValues = new Dictionary<string, bool>(); }
+        if (data.stringValues == null) { data.stringValues = new Dictionary<string, string>(); }
+        AddDefaults();
+        Debug.Log($"Saving To ApplicationDataFolder: {Application.persistentDataPath}/options.json");
+        var jsonString = JsonConvert.SerializeObject(data);
+        Debug.Log(jsonString);
+        File.WriteAllText($"{Application.persistentDataPath}/options.json", jsonString);
+        Debug.Log($"Done Saving!!!");
         UpdateDebug();
     }
 
     public void Load()
     {
-        if (intValues == null) { intValues = new Dictionary<string, int>(); }
-        if (floatValues == null) { floatValues = new Dictionary<string, float>(); }
-        if (boolValues == null) { boolValues = new Dictionary<string, bool>(); }
+        Debug.Log($"Loading From ApplicationDataFolder: {Application.persistentDataPath}/options.json");
+        
+        if (File.Exists($"{Application.persistentDataPath}/options.json"))
+        {
+            var jsonString = File.ReadAllText($"{Application.persistentDataPath}/options.json");
+            Debug.Log(jsonString);
+            data = JsonConvert.DeserializeObject<OptionData>(jsonString);
+        }
+        else
+        {
+            data = new OptionData();
+            data.intValues = new Dictionary<string, int>();
+            data.floatValues = new Dictionary<string, float>();
+            data.boolValues = new Dictionary<string, bool>();
+            data.stringValues = new Dictionary<string, string>();
+        }
+        AddDefaults();
+        Save();
+        Debug.Log($"Done Loading!!!");
+        UpdateDebug();
+    }
 
+    public void AddDefaults()
+    {
+        if (data.intValues == null)
+        { 
+            data.intValues = new Dictionary<string, int>();
+        }
+        if (data.floatValues == null)
+        { 
+            data.floatValues = new Dictionary<string, float>(); 
+        }
+        if (data.boolValues == null)
+        { 
+            data.boolValues = new Dictionary<string, bool>();
+        }
+        if (data.stringValues == null)
+        { 
+            data.stringValues = new Dictionary<string, string>();
+        }
         foreach (var item in defaultInts)
         {
-            var value = PlayerPrefs.GetInt(item.name, item.defaultValue);
-            if (intValues.ContainsKey(item.name))
+            if (!data.intValues.ContainsKey(item.name))
             {
-                intValues[item.name] = value;
-            }
-            else
-            {
-                intValues.Add(item.name, value);
+                data.intValues.Add(item.name, item.defaultValue);
             }
         }
         foreach (var item in defaultFloats)
         {
-            var value = PlayerPrefs.GetFloat(item.name, item.defaultValue);
-            if (floatValues.ContainsKey(item.name))
+            if (!data.floatValues.ContainsKey(item.name))
             {
-                floatValues[item.name] = value;
-            }
-            else
-            {
-                floatValues.Add(item.name, value);
+                data.floatValues.Add(item.name, item.defaultValue);
             }
         }
         foreach (var item in defaultBools)
         {
-            var defaultValue = (item.defaultValue) ? 1 : 0;
-            var value = (PlayerPrefs.GetInt(item.name, defaultValue) == 1) ? true : false;
-            if (boolValues.ContainsKey(item.name))
+            if (!data.boolValues.ContainsKey(item.name))
             {
-                boolValues[item.name] = value;
-            }
-            else
-            {
-                boolValues.Add(item.name, value);
+                data.boolValues.Add(item.name, item.defaultValue);
             }
         }
-        UpdateDebug();
+        foreach (var item in defaultStrings)
+        {
+            if (!data.stringValues.ContainsKey(item.name))
+            {
+                data.stringValues.Add(item.name, item.defaultValue);
+            }
+        }
     }
 
-    public void SetIntValue(string name, int value)
+
+    public void SetStringValue(string name, string value)
     {
-        if (intValues.ContainsKey(name))
+        if (data.stringValues.ContainsKey(name))
         {
-            intValues[name] = value;
+            data.stringValues[name] = value;
         }
         else
         {
-            intValues.Add(name, value);
+            data.stringValues.Add(name, value);
         }
         Save();
     }
-
-    public int GetIntValue(string name, int defaultValue = 0)
+    public string GetStringValue(string name, string defaultValue = "")
     {
-        if (intValues.ContainsKey(name))
+        if (data.stringValues.ContainsKey(name))
         {
-            return intValues[name];
+            return data.stringValues[name];
         }
         else
         {
@@ -109,24 +143,56 @@ public class OptionsObject : ScriptableObject
         }
     }
 
-    public void SetBoolValue(string name, bool value)
+    public void SetIntValue(string name, int value)
     {
-        if (boolValues.ContainsKey(name))
+        if (data.intValues.ContainsKey(name))
         {
-            boolValues[name] = value;
+            data.intValues[name] = value;
         }
         else
         {
-            boolValues.Add(name, value);
+            data.intValues.Add(name, value);
+        }
+        Save();
+    }
+
+    public int GetIntValue(string name, int defaultValue = 0)
+    {
+        foreach (var item in data.intValues)
+        {
+            Debug.LogWarning($"{item.Key} : {item.Value}");
+        }
+
+
+        if (data.intValues.ContainsKey(name))
+        {
+            return data.intValues[name];
+        }
+        else
+        {
+            Debug.LogWarning($"No key! {name} : {defaultValue}");
+            return defaultValue;
+        }
+    }
+
+    public void SetBoolValue(string name, bool value)
+    {
+        if (data.boolValues.ContainsKey(name))
+        {
+            data.boolValues[name] = value;
+        }
+        else
+        {
+            data.boolValues.Add(name, value);
         }
         Save();
     }
 
     public bool GetBoolValue(string name, bool defaultValue = false)
     {
-        if (boolValues.ContainsKey(name))
+        if (data.boolValues.ContainsKey(name))
         {
-            return boolValues[name];
+            return data.boolValues[name];
         }
         else
         {
@@ -136,22 +202,25 @@ public class OptionsObject : ScriptableObject
 
     public void SetFloatValue(string name, float value)
     {
-        if (floatValues.ContainsKey(name))
+        Debug.Log($"Setting Float Value! {name}, {value}");
+        if (data.floatValues.ContainsKey(name))
         {
-            floatValues[name] = value;
+            data.floatValues[name] = value;
         }
         else
         {
-            floatValues.Add(name, value);
+            Debug.Log($"Adding To List! {name}, {value}");
+            data.floatValues.Add(name, value);
         }
+        Debug.Log($"Saving!");
         Save();
     }
 
     public float GetFloatValue(string name, float defaultValue = 0.0f)
     {
-        if (floatValues.ContainsKey(name))
+        if (data.floatValues.ContainsKey(name))
         {
-            return floatValues[name];
+            return data.floatValues[name];
         }
         else
         {
@@ -160,23 +229,24 @@ public class OptionsObject : ScriptableObject
     }
 
     [System.NonSerialized] bool initialized;
+
     public void OnEnable()
     {
-        if (!initialized)
-        {
-            Load();
-        }
+        Debug.LogWarning("OnEnable");
+        Load();
     }
 
-    private void OnDisable()
-    {
-        Save();
-    }
+    //private void OnDisable()
+    //{
+    //    Debug.LogWarning("OnDisable");
+    //    Debug.LogWarning($"Disabling and Saving! {initialized}");
+    //    Save();
+    //}
 
     public void UpdateDebug()
     {
         debugInts = new List<IntOption>();
-        foreach (var item in intValues)
+        foreach (var item in data.intValues)
         {
             var key = item.Key;
             var value = item.Value;
@@ -187,7 +257,7 @@ public class OptionsObject : ScriptableObject
             });
         }
         debugFloats = new List<FloatOption>();
-        foreach (var item in floatValues)
+        foreach (var item in data.floatValues)
         {
             var key = item.Key;
             var value = item.Value;
@@ -198,11 +268,22 @@ public class OptionsObject : ScriptableObject
             });
         }
         debugBools = new List<BoolOption>();
-        foreach (var item in boolValues)
+        foreach (var item in data.boolValues)
         {
             var key = item.Key;
             var value = item.Value;
             debugBools.Add(new BoolOption()
+            {
+                name = key,
+                defaultValue = value
+            });
+        }
+        debugStrings = new List<StringOption>();
+        foreach (var item in data.stringValues)
+        {
+            var key = item.Key;
+            var value = item.Value;
+            debugStrings.Add(new StringOption()
             {
                 name = key,
                 defaultValue = value
@@ -228,4 +309,10 @@ public struct BoolOption
 {
     public string name;
     public bool defaultValue;
+}
+[System.Serializable]
+public struct StringOption
+{
+    public string name;
+    public string defaultValue;
 }
